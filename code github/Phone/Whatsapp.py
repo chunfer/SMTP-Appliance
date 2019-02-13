@@ -1,4 +1,5 @@
 # Author: Juan Fernando Montufar Juarez
+# Whatsapp chat app version 2
 #
 # To use this program you should follow the next steps:
 # 1- Install selenium:
