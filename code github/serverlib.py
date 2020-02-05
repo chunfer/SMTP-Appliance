@@ -38,11 +38,14 @@ class ServerInitError(ServerException):
 #General server constants
 DEFAULT_TIMEOUT = 3
 PROTO_TYPES = {'TCP': socket.SOCK_STREAM, 'UDP': socket.SOCK_DGRAM}
-SSL_KEY = '.key.pem' #Keyfile required for SSL servers
-SSL_CERT = '.cert.pem' #Certfile required for SSL servers
+SSL_KEY = 'key.pem' #Keyfile required for SSL ports
+SSL_CERT = 'cert.pem' #Certfile required for SSL ports
 
 class Server(object):
-	#General server class. Supports SSL and Non-SSL connections
+	"""This class is meant to be used as a base for every servers classes.
+	It can handle multiple ports and SSL connections.
+	"""
+	#General server class.
 
 	def __init__(self, ports = (), ssl_ports = (), key = SSL_KEY, cert = SSL_CERT, timeout = DEFAULT_TIMEOUT, greeting_msg = '', address_filter = [], blacklist_mode = True, proto = 'TCP'):
 		#Ports should be a tuple, but if an integer is sent, can take it anyway
@@ -195,6 +198,10 @@ End of HELP info
 
 
 class SMTPServer(Server):
+	"""To initiate a high performance server on python run the following
+		import serverlib
+		server = serverlib.SMTPServer()
+	"""
 	#Server for handling SMTP protocol
 
 	def __init__(self, wait_response = SMTP_MAXWAIT_TIME, ports = SMTP_PORTS, ssl_ports = SSMTP_PORTS, key = SSL_KEY, cert = SSL_CERT, timeout = DEFAULT_TIMEOUT, address_filter = []):
