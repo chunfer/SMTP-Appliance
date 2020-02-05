@@ -533,7 +533,6 @@ class SMTPServer(Server):
 						rcpttos = []
 						data = ''
 						mail_stage = ''
-						authenticated = False
 
 					else:
 						client_sock.sendall('530 Authentication required' + CRLF)
