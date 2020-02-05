@@ -90,7 +90,7 @@ class Server(object):
 				if 'Address already in use' in e:
 
 					#Add recommendation for linux users
-					e += '\n Run command \'losf -i:' + str(port) + '\' to check out the PID blocking the port and then stop it.'
+					e += '\n Run command \'lsof -i:' + str(port) + '\' to check out the PID blocking the port and stop it.'
 
 				raise ServerInitError(e)
 		
@@ -120,7 +120,7 @@ class Server(object):
 				e = str(e)
 				#Find out if error shows that the address is already in use
 				if 'Address already in use' in e:
-					e += '\n Run command losf -i:' + str(ssl_port) + ' to check out the PID blocking the port and then stop it.'
+					e += '\n Run command losf -i:' + str(ssl_port) + ' to check out the PID blocking the port and stop it.'
 
 				raise ServerInitError(e)
  
