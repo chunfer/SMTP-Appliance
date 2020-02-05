@@ -198,7 +198,7 @@ End of HELP info
 
 
 class SMTPServer(Server):
-	"""To initiate a high performance server on python run the following
+	"""To initiate a high performance SMTP server with SSL connections on python run the following
 		import serverlib
 		server = serverlib.SMTPServer()
 	"""
