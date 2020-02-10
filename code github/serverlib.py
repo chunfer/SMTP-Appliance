@@ -36,10 +36,10 @@ class ServerInitError(ServerException):
 	"""Exception for initialization errors"""
 		
 #General server constants
-DEFAULT_TIMEOUT = 3
+DEFAULT_TIMEOUT = N #socket timeout
 PROTO_TYPES = {'TCP': socket.SOCK_STREAM, 'UDP': socket.SOCK_DGRAM}
-SSL_KEY = 'key.pem' #Keyfile required for SSL ports
-SSL_CERT = 'cert.pem' #Certfile required for SSL ports
+SSL_KEY = 'YOUR_PATH_TO_KEYFILE' #Keyfile required for SSL ports
+SSL_CERT = 'YOUR_PATH_TO_CERTFILE' #Certfile required for SSL ports
 
 class Server(object):
 	"""This class is meant to be used as a base for every servers classes.
@@ -186,8 +186,8 @@ SMTP_PORTS = (25, 587) #Default SMTP ports
 MAX_LINE_SIZE = 4194304 #Máximum amount of bytes that can be received
 SMTP_MAXWAIT_TIME = 300 #Máximum amount of time (in seconds) to wait for receiving information for each client
 SMTP_EHLO_REGPARAMS = ['STARTTLS', 'SIZE ' + str(MAX_LINE_SIZE), '8BITMIME', 'PIPELINING','HELP'] #EHLO regular parameters
-AUTH_STR = 'AUTH CRAM-MD5 PLAIN LOGIN' #Authentication types supported
-SMTP_NOAUTH_LIST = ['10.10.10.100'] #Addresses that don't require authentication
+AUTH_STR = 'AUTH YOUR_AUTH_TYPES' #Authentication types supported
+SMTP_NOAUTH_LIST = ['localhost'] #Addresses that don't require authentication
 SMTP_HELP = """
 This is SMTP Sever version 1.0.0
 Commands available:
@@ -222,7 +222,7 @@ class SMTPServer(Server):
 		self.mails_queue = Queue.Queue()
 
 		#Intitate dictionary of users
-		self.smtp_users = {'my@user.com':('my_password', 'My Username', 'default_group')} 
+		self.smtp_users = {} 
 
 		#Generate greeting message
 		self.fqdn = socket.getfqdn()
@@ -341,86 +341,10 @@ class SMTPServer(Server):
 						client_sock.sendall('554 Transaction failed' + CRLF)
 				
 				elif upline.startswith('AUTH'):
-
-					#Authentication process only allowed during SSL sessions
-					if not ssl_started:
-						client_sock.sendall('538 Encryption required for requested authentication mechanism' + CRLF)
-						continue
-
-					if authenticated or (client_sock.getsockname()[0] in SMTP_NOAUTH_LIST):
-						client_sock.sendall('503 Error: already authenticated' + CRLF)
-
-					else:
-						params = line.rstrip(CRLF).split()
-						auth_type = params[1]
-
-						#Check authentication type 
-						if auth_type == 'CRAM-MD5':
-							#Generate random challenge string with base 64 encoding
-							challenge = binascii.b2a_hex(os.urandom(25))
-
-							#Send random encoded string
-							client_sock.sendall('334 ' + base64.b64encode(challenge) + CRLF)
-
-							#Process response
-							auth_response = client_file.readline(MAX_LINE_SIZE + 1)
-							auth_response = base64.b64decode(auth_response.rstrip(CRLF))
-							user, hmac_val = auth_response.split()
-
-							#Validate user password combination
-							if user in self.smtp_users:
-								if hmac_val == hmac.HMAC(self.smtp_users[user][0], challenge).hexdigest():
-									client_sock.sendall('235 Authentication successful' + CRLF)
-									authenticated = True
-									
-								else:
-									client_sock.sendall('535 Authentication failed' + CRLF)
-
-							else:
-								client_sock.sendall('535 Authentication failed' + CRLF)
-
-						elif auth_type == 'PLAIN':
-							#Do PLAIN process for authentication
-							login_info = params[2].rstrip(CRLF)
-
-							#Get user and password
-							_, user, password = base64.b64decode(login_info).split('\0')
-
-							#Validate user and password
-							if user in self.smtp_users:
-								if password == self.smtp_users[user][0]:
-									client_sock.sendall('235 Authentication successful' + CRLF)
-									authenticated = True
-
-								else:
-									client_sock.sendall('535 Authentication failed' + CRLF)
-							else:
-								client_sock.sendall('535 Authentication failed' + CRLF)
-
-						elif auth_type == 'LOGIN':
-							#Do LOGIN process for authentication
-							user = base64.b64decode(params[2].rstrip(CRLF))
-							
-							#Validate user
-							if user in self.smtp_users:
-								client_sock.sendall('334 User authenticated' + CRLF)
-								password = client_file.readline(MAX_LINE_SIZE + 1)
-								password = base64.b64decode(password.rstrip(CRLF))
-								
-								#Validate password
-								if password == self.smtp_users[user][0]:
-									client_sock.sendall('235 Authentication successful' + CRLF)
-									authenticated = True
-
-								else:
-									client_sock.sendall('535 Authentication failed' + CRLF)
-							else:
-								client_sock.sendall('535 Authentication failed' + CRLF)
-
-
-						else:
-							client_sock.sendall('504 Unrecognized authentication type' + CRLF)
-
+				"""Handle you authentication types
+				"""
+				
+				
 				elif upline.startswith('MAIL FROM'):
 
 					#Verify if user has authenticated. It only accepts authentication through SSL
