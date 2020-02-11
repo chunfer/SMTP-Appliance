@@ -36,7 +36,7 @@ class ServerInitError(ServerException):
 	"""Exception for initialization errors"""
 		
 #General server constants
-DEFAULT_TIMEOUT = N #socket timeout
+DEFAULT_TIMEOUT = 3 #socket timeout
 PROTO_TYPES = {'TCP': socket.SOCK_STREAM, 'UDP': socket.SOCK_DGRAM}
 SSL_KEY = 'YOUR_PATH_TO_KEYFILE' #Keyfile required for SSL ports
 SSL_CERT = 'YOUR_PATH_TO_CERTFILE' #Certfile required for SSL ports
@@ -185,7 +185,7 @@ SSMTP_PORTS = (465,) #Default secure SMTP port
 SMTP_PORTS = (25, 587) #Default SMTP ports
 MAX_LINE_SIZE = 4194304 #Máximum amount of bytes that can be received
 SMTP_MAXWAIT_TIME = 300 #Máximum amount of time (in seconds) to wait for receiving information for each client
-SMTP_EHLO_REGPARAMS = ['STARTTLS', 'SIZE ' + str(MAX_LINE_SIZE), '8BITMIME', 'PIPELINING','HELP'] #EHLO regular parameters
+SMTP_EHLO_REGPARAMS = ['STARTTLS', 'SIZE ' + str(MAX_LINE_SIZE), '8BITMIME','HELP'] #EHLO regular parameters
 AUTH_STR = 'AUTH YOUR_AUTH_TYPES' #Authentication types supported
 SMTP_NOAUTH_LIST = ['localhost'] #Addresses that don't require authentication
 SMTP_HELP = """
