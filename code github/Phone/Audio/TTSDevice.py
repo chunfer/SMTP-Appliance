@@ -1,4 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+Library that transforms any text into a readable 'wav' file. 
+The wav file can be used played in:
+
+	- RTP protocol
+	- Audio devices
+
+gTTS License:
+The MIT License (MIT) Copyright © 2014-2020 Pierre Nicolas Durette
+"""
+
 from __init__ import SAMPLE_RATE, CHANNELS
 from FileDevice import FileDev
 from gtts import gTTS
