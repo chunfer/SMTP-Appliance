@@ -19,11 +19,11 @@ from collections import OrderedDict
 LANG = 'en'
 
 #VoIP constants
-IP, VOIP_USERNAME, VOIP_DOMAIN, VOIP_PASSWORD, VOIP_DISPLAY_NAME = 'localhost','100', '10.10.10.4', 'b2ad4080469bd1aaf1b4af43ecc0512c', 'SMTP Appliance'
+IP, VOIP_USERNAME, VOIP_DOMAIN, VOIP_PASSWORD, VOIP_DISPLAY_NAME = 'localhost','MY_EXTENSION', 'FREEPBX_IP', 'MYVOIP_PASSWORD', 'MY NAME'
 GETSIPSTATUS_DELAY = 1
 
 #Mail Variables
-SOFTPHONE_MAIL, SOFTPHONE_PASSWORD = 'jmsoftphone@gmail.com', 'rzsylthvtfpemcau'
+SOFTPHONE_MAIL, SOFTPHONE_PASSWORD = 'myappliance@gmail.com', 'myapp_password'
 MAIL_SERVER, MAIL_PORT = 'smtp.gmail.com', 587
 
 #Modules Enabled
@@ -32,12 +32,11 @@ VOIP_ENABLED, SIMCALL_ENABLED, SMS_ENABLED, MAIL_ENABLED = False, False, False, 
 #Modules Numbers
 MAIL, VOIP_CALL, SIM_CALL, SMS = 0, 1, 2, 3
 
-DEFAULT_EMAIL = '969.980.usac@gmail.com'
+DEFAULT_EMAIL = 'my@email1.com'
 
 class Softphone(object):
 	#Transmision handler
-	MAIL_NUMBERS = OrderedDict([('969.980.usac@gmail.com',('101','51741878')), ('alexmontufar16@gmail.com',('102','55165303')), ('dpajiflex@hotmail.com',('103','41745676'))])
-
+	MAIL_NUMBERS = OrderedDict([('my@email1.com',('MY EXTENSION 1', 'MY PHONE NUMBER 1')), ('my@email2.com',('MY EXTENSION 2', 'MY PHONE NUMBER 2'))])
 	def __init__(self, ip = IP, timeout = DEFAULT_TIMEOUT, voip_enabled = VOIP_ENABLED, simcall_enabled = SIMCALL_ENABLED, sms_enabled = SMS_ENABLED, mail_enabled = MAIL_ENABLED):
 
 		#Enable modules at start
