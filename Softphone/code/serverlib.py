@@ -146,7 +146,7 @@ DONT_PROCESS_TUPLE = () #Messages not to be processed
 
 class SMTPServer(Server):
 	#Server for handling SMTP protocol
-	SMTP_USERS = OrderedDict([('969.980.usac@gmail.com',('Juan Montufar', 'Admins')), ('alexmontufar16@gmail.com',('Alex Montufar','My_Group')), ('dpajiflex@hotmail.com',('Luis Montufar','My_Group'))])
+	SMTP_USERS = OrderedDict([('my@email1.com',('My User 1', 'My_Group')), ('my@email2.com',('My User 2', 'My_Group'))])
 
 	def __init__(self, wait_response = SMTP_MAXWAIT_TIME, port = SMTP_PORT, timeout = DEFAULT_TIMEOUT):
 
