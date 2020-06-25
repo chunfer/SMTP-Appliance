@@ -9,10 +9,10 @@ from Phone import Softphone, MAIL, VOIP_CALL, SIM_CALL, SMS, LANG, SOFTPHONE_MAI
 from serverlib import SMTPServer, DEFAULT_TIMEOUT
 
 #Zabbix database variables
-ZABBIX_HOST = 'localhost'
-ZABBIX_USER = 'Zabbix_DBA'
-ZABBIX_PASSWD = '@@ManaG3r1'
-ZABBIX_DB = 'zabbix'
+ZABBIX_HOST = 'IP_DE_ZABBIX'
+ZABBIX_USER = 'USUARIO_DE_BD'
+ZABBIX_PASSWD = 'CONTRASEÑA_DE_BD'
+ZABBIX_DB = 'BD'
 
 def getHeader(header, data, add_header_to_string = True):
 	#checkout for special headers 'From' and 'To'
