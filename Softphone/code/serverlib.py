@@ -281,7 +281,7 @@ class SMTPServer(Server):
 		mail_stage = '' #Identifier of mail stage
 		challenge = '' #Random string for CRAM MD5
 		timeout_counter = 0 #Counter (in seconds) of timeouts
-		peername = ''
+		peername = client_sock.getpeername()
 		helo_response = self.fqdn + ' Hello'
 
 		#Generate a single line response based on a list of responses
@@ -464,7 +464,6 @@ class SMTPServer(Server):
 
 					#Quit from session
 					client_sock.sendall('221 ' + self.fqdn + ' Service closing transmission channel' + CRLF)
-					peername = client_sock.getpeername()
 					client_sock.close()
 					raise socket.error('Client quitted session')
 
@@ -500,12 +499,7 @@ class SMTPServer(Server):
 
 			except socket.error as e:
 				error_found = True
-				if peername:
-					print e, 'in', peername
-				
-				else:
-					print e, 'in', client_sock.getpeername()
-
+				print e, 'in', peername
 				break
 
 		if not error_found:
